@@ -25,10 +25,33 @@ hs_err_pid*
 # IntelliJ
 .idea
 *.iml
+*.ipr
+*.iws
 
 # VS Code
 .vscode
 
+# Eclipse Core
+.project
+.settings
+
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+# Java annotation processor (APT)
+.factorypath
+
 # Project files
 /target/
 **/node_modules
+build/
+target/
+out/
+.micronaut/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+.Trashes
+._*
+Thumbs.db

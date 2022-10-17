@@ -1,12 +1,12 @@
-# Template for Java Spring Microservice project
+# POC Micronaut - Reporting Organization Enrollment
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=TODO-set-your-id&metric=alert_status)](https://sonarcloud.io/dashboard?id=TODO-set-your-id)
+This project is a Micronaut application for the development of the microservice [ReportingOrgsEnrollment](https://github.com/pagopa/pagopa-reporting-orgs-enrollment).
 
-TODO: add a description
+The aim of this project is the feasibility assessment of referred microservice through Micronaut.
 
-TODO: generate a index with this tool: https://ecotrust-canada.github.io/markdown-toc/
+<!-- [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=TODO-set-your-id&metric=alert_status)](https://sonarcloud.io/dashboard?id=TODO-set-your-id) -->
 
-TODO: resolve all the TODOs in this template
+<!-- TODO: generate a index with this tool: https://ecotrust-canada.github.io/markdown-toc/ -->
 
 ---
 ## Api Documentation 📖
@@ -16,12 +16,8 @@ See the [OpenApi 3 here.](TODO: set your url)
 
 ## Technology Stack
 - Java 11
-- Spring Boot
-- Spring Web
-- Hibernate
-- JPA
-- ...
-- TODO
+- Micronaut
+- [Azure Table Storage API](https://learn.microsoft.com/en-us/java/api/overview/azure/data-tables-readme?view=azure-java-stable)
 ---
 
 ## Start Project Locally 🚀
@@ -46,15 +42,14 @@ See the [OpenApi 3 here.](TODO: set your url)
 
 Start the springboot application with this command:
 
-`mvn spring-boot:run -Dspring-boot.run.profiles=local`
+`mvn mn:run`
 
-
-
-### Spring Profiles
+<!--
+### Spring Profiles 
 
 - **local**: to develop locally.
 - _default (no profile set)_: The application gets the properties from the environment (for Azure).
-
+-->
 
 ### Testing 🧪
 
