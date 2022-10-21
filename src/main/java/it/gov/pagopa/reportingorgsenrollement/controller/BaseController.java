@@ -7,6 +7,8 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.uri.UriBuilder;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,6 +19,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import it.gov.pagopa.reportingorgsenrollement.model.AppInfo;
 import it.gov.pagopa.reportingorgsenrollement.model.ProblemJson;
 
+@ExecuteOn(TaskExecutors.IO)
 @Controller()
 public class BaseController {
     @Value("${info.application.artifactId}")
