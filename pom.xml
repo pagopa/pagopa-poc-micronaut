@@ -19,6 +19,8 @@
         <jdk.version>11</jdk.version>
         <release.version>11</release.version>
         <micronaut.version>3.7.1</micronaut.version>
+        <lombok.version>1.18.12</lombok.version>
+        <micronaut-openapi.version>4.5.2</micronaut-openapi.version>
         <micronaut.runtime>netty</micronaut.runtime>
         <exec.mainClass>it.gov.pagopa.reportingorgsenrollement.Application</exec.mainClass>
     </properties>
@@ -31,6 +33,16 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-inject</artifactId>
@@ -97,16 +109,38 @@
                     <!-- Uncomment to enable incremental compilation -->
                     <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
 
-                    <annotationProcessorPaths combine.children="append">
+                    <annotationProcessorPaths>
+                        <path>
+                            <!-- must precede micronaut-inject-java -->
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-inject-java</artifactId>
+                            <version>${micronaut.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-validation</artifactId>
+                            <version>${micronaut.version}</version>
+                        </path>
                         <path>
                             <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-http-validation</artifactId>
                             <version>${micronaut.version}</version>
                         </path>
+                        <path>
+                            <groupId>io.micronaut.openapi</groupId>
+                            <artifactId>micronaut-openapi</artifactId>
+                            <version>${micronaut-openapi.version}</version>
+                        </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
-                        <arg>-Amicronaut.processing.group=example.micronaut</arg>
-                        <arg>-Amicronaut.processing.module=micronautguide</arg>
+                        <arg>-Amicronaut.processing.group=${project.groupId}</arg>
+                        <arg>-Amicronaut.processing.module=${project.artifactId}</arg>
+                        <arg>-Amicronaut.openapi.views.spec=rapidoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>

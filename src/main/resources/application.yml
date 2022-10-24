@@ -1,6 +1,22 @@
-micronaut:
+# info
+info:
   application:
-    name: micronautguide
+    name: PagoPA API - Reporting Organizations Enrollments
+    artifactId: ReportingOrgsEnrollment
+    version: 0.0.1
+  properties:
+    environment: local
+
+micronaut:
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+
 netty:
   default:
     allocator:
