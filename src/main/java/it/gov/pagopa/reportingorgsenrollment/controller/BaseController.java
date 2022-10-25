@@ -1,4 +1,4 @@
-package it.gov.pagopa.reportingorgsenrollement.controller;
+package it.gov.pagopa.reportingorgsenrollment.controller;
 
 import io.micronaut.context.annotation.Value;
 import io.micronaut.http.HttpResponse;
@@ -16,8 +16,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import it.gov.pagopa.reportingorgsenrollement.model.AppInfo;
-import it.gov.pagopa.reportingorgsenrollement.model.ProblemJson;
+import it.gov.pagopa.reportingorgsenrollment.model.AppInfo;
+import it.gov.pagopa.reportingorgsenrollment.model.ProblemJson;
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller()

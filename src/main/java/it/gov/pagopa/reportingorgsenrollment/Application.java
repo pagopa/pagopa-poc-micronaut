@@ -1,4 +1,4 @@
-package it.gov.pagopa.reportingorgsenrollement;
+package it.gov.pagopa.reportingorgsenrollment;
 
 import io.micronaut.runtime.Micronaut;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;

@@ -1,4 +1,4 @@
-package it.gov.pagopa.reportingorgsenrollement.model.response;
+package it.gov.pagopa.reportingorgsenrollment.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

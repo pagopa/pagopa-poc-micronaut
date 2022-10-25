@@ -1,4 +1,4 @@
-package it.gov.pagopa.reportingorgsenrollement.model;
+package it.gov.pagopa.reportingorgsenrollment.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -22,7 +22,7 @@
         <lombok.version>1.18.22</lombok.version>
         <micronaut-openapi.version>4.5.2</micronaut-openapi.version>
         <micronaut.runtime>netty</micronaut.runtime>
-        <exec.mainClass>it.gov.pagopa.reportingorgsenrollement.Application</exec.mainClass>
+        <exec.mainClass>it.gov.pagopa.reportingorgsenrollment.Application</exec.mainClass>
     </properties>
 
     <repositories>

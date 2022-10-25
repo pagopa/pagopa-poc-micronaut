@@ -1,4 +1,4 @@
-package it.gov.pagopa.reportingorgsenrollement.controller;
+package it.gov.pagopa.reportingorgsenrollment.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -13,8 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import it.gov.pagopa.reportingorgsenrollement.model.ProblemJson;
-import it.gov.pagopa.reportingorgsenrollement.model.response.OrganizationModelResponse;
+import it.gov.pagopa.reportingorgsenrollment.model.ProblemJson;
+import it.gov.pagopa.reportingorgsenrollment.model.response.OrganizationModelResponse;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;

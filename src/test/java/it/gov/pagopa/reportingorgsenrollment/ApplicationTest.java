@@ -1,4 +1,4 @@
-package it.gov.pagopa.reportingorgsenrollement;
+package it.gov.pagopa.reportingorgsenrollment;
 
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
