@@ -10,7 +10,7 @@ The aim of this project is the feasibility assessment of referred microservice t
 
 ---
 ## Api Documentation 📖
-See the [OpenApi 3 here.](TODO: set your url)
+See the [OpenApi 3 here.](https://editor.swagger.io/?url=https://raw.githubusercontent.com/pagopa/pagopa-poc-micronaut/main/openapi/openapi.json)
 
 ---
 
