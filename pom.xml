@@ -19,7 +19,7 @@
         <jdk.version>11</jdk.version>
         <release.version>11</release.version>
         <micronaut.version>3.7.1</micronaut.version>
-        <lombok.version>1.18.12</lombok.version>
+        <lombok.version>1.18.22</lombok.version>
         <micronaut-openapi.version>4.5.2</micronaut-openapi.version>
         <micronaut.runtime>netty</micronaut.runtime>
         <exec.mainClass>it.gov.pagopa.reportingorgsenrollement.Application</exec.mainClass>
