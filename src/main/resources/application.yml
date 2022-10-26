@@ -1,4 +1,4 @@
-# info
+# info:
 info:
   application:
     name: PagoPA API - Reporting Organizations Enrollments
@@ -6,7 +6,8 @@ info:
     version: 0.0.1
   properties:
     environment: local
-
+---
+# micronaut settings:
 micronaut:
   router:
     static-resources:
@@ -16,8 +17,29 @@ micronaut:
       swagger-ui:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
-
+---
+#tag::datasource[]
+datasources:
+  default:
+    url: ${JDBC_URL:`jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`}
+    username: ${JDBC_USER:sa}
+    password: ${JDBC_PASSWORD:""}
+    driverClassName: ${JDBC_DRIVER:org.h2.Driver}
+#end::datasource[]
+---
+#tag::jpa[]
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        show_sql: true
+#end::jpa[]
+---
+#tag::netty[]
 netty:
   default:
     allocator:
       max-order: 3
+#end::netty[]
