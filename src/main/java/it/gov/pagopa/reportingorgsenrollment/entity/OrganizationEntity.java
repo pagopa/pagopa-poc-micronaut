@@ -15,10 +15,6 @@ import java.time.LocalDateTime;
 public class OrganizationEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ORG_ID", nullable = false)
-    private Long id;
-
     @NotNull
     @Column(name = "ORG_FISCAL_CODE", nullable = false, unique = true)
     private String organizationFiscalCode;

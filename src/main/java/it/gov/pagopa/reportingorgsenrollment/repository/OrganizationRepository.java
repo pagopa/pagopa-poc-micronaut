@@ -22,8 +22,8 @@ public class OrganizationRepository {
     }
 
     @ReadOnly
-    public Optional<OrganizationEntity> findById(long id) {
-        return Optional.ofNullable(entityManager.find(OrganizationEntity.class, id));
+    public Optional<OrganizationEntity> findByFiscalCode(String organizationFiscalCode) {
+        return Optional.ofNullable(entityManager.find(OrganizationEntity.class, organizationFiscalCode));
     }
 
     @Transactional
@@ -34,8 +34,8 @@ public class OrganizationRepository {
     }
 
     @Transactional
-    public void deleteById(long id) {
-        findById(id).ifPresent(entityManager::remove);
+    public void deleteByFiscalCode(String organizationFiscalCode) {
+        findByFiscalCode(organizationFiscalCode).ifPresent(entityManager::remove);
     }
 
     @ReadOnly

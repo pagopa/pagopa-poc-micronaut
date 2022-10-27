@@ -25,7 +25,7 @@ public class OrganizationRepositoryTest {
     @Test
     void testCreateReadOrganization() {
         OrganizationEntity organizationEntity = organizationRepository.save("mockOrganizationFiscalCode", LocalDateTime.now());
-        OrganizationEntity savedEntity = organizationRepository.findById(organizationEntity.getId()).orElse(null);
+        OrganizationEntity savedEntity = organizationRepository.findByFiscalCode(organizationEntity.getOrganizationFiscalCode()).orElse(null);
 
         assertNotNull(savedEntity);
         assertEquals(organizationEntity, savedEntity);
@@ -45,15 +45,15 @@ public class OrganizationRepositoryTest {
     @Test
     void testDeleteOrganization() {
         int n = 3;
-        List<Long> organizationIds = new ArrayList<>();
+        List<String> organizationFiscalCodeList = new ArrayList<>();
 
         for(int i = 0; i < n; i++)
-            organizationIds.add(
-                    organizationRepository.save("mockOrganizationFiscalCode" + i, LocalDateTime.now()).getId()
+            organizationFiscalCodeList.add(
+                    organizationRepository.save("mockOrganizationFiscalCode" + i, LocalDateTime.now()).getOrganizationFiscalCode()
             );
 
-        for(long id: organizationIds)
-            organizationRepository.deleteById(id);
+        for(String fiscalCode: organizationFiscalCodeList)
+            organizationRepository.deleteByFiscalCode(fiscalCode);
 
         assertEquals(0, organizationRepository.findAll().size());
     }
