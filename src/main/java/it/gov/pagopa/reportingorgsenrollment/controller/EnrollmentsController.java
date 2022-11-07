@@ -4,7 +4,7 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
-import it.gov.pagopa.reportingorgsenrollment.EnrollmentsService;
+import it.gov.pagopa.reportingorgsenrollment.service.EnrollmentsService;
 import it.gov.pagopa.reportingorgsenrollment.model.response.OrganizationModelResponse;
 import jakarta.inject.Inject;
 
