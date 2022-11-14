@@ -18,8 +18,8 @@ public class EnrollmentsServiceImpl implements EnrollmentsService {
 
     private final OrganizationRepository organizationRepository;
 
-    EnrollmentsServiceImpl(OrganizationRepository genreRepository) {
-        this.organizationRepository = genreRepository;
+    EnrollmentsServiceImpl(OrganizationRepository organizationRepository) {
+        this.organizationRepository = organizationRepository;
     }
 
     @Override
