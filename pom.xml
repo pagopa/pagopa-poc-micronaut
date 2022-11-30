@@ -18,11 +18,12 @@
         <packaging>jar</packaging>
         <jdk.version>11</jdk.version>
         <release.version>11</release.version>
-        <micronaut.version>3.7.2</micronaut.version>
+        <micronaut.version>3.7.3</micronaut.version>
         <lombok.version>1.18.22</lombok.version>
         <micronaut-openapi.version>4.5.2</micronaut-openapi.version>
         <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
         <h2.version>2.1.212</h2.version>
+        <mockito-junit.version>4.1.0</mockito-junit.version>
         <micronaut.runtime>netty</micronaut.runtime>
         <exec.mainClass>it.gov.pagopa.reportingorgsenrollment.Application</exec.mainClass>
     </properties>
@@ -36,6 +37,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito-junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
@@ -48,6 +55,7 @@
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-inject</artifactId>
+            <version>${micronaut.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -120,6 +128,11 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
