@@ -18,14 +18,22 @@ micronaut:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
 ---
-#tag::datasource[]
+#tag::datasource_table
+tables:
+  reporting:
+    connection: ${STORAGE_PRIMARY_CONNECTION_KEY}
+    organizations:
+      table: organization
+#end::datasource_table
+---
+#tag::datasource_sql[]
 datasources:
   default:
     url: ${JDBC_URL:`jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`}
     username: ${JDBC_USER:sa}
     password: ${JDBC_PASSWORD:""}
     driverClassName: ${JDBC_DRIVER:org.h2.Driver}
-#end::datasource[]
+#end::datasource_sql[]
 ---
 #tag::jpa[]
 jpa:

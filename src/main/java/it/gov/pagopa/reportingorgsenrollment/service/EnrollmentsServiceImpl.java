@@ -34,7 +34,7 @@ public class EnrollmentsServiceImpl implements EnrollmentsService {
 
     @Override
     public void removeOrganization(String organizationFiscalCode) {
-        if( organizationRepository.findByFiscalCode(organizationFiscalCode).isPresent())
+        if(organizationRepository.findByFiscalCode(organizationFiscalCode).isPresent())
             organizationRepository.deleteByFiscalCode(organizationFiscalCode);
         else
             throw new AppException(AppError.ORGANIZATION_NOT_FOUND, organizationFiscalCode);
