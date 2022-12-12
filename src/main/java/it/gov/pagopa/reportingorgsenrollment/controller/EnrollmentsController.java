@@ -5,7 +5,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import it.gov.pagopa.reportingorgsenrollment.model.response.OrganizationModelResponse;
-import it.gov.pagopa.reportingorgsenrollment.service.EnrollmentsServiceTableImpl;
+import it.gov.pagopa.reportingorgsenrollment.service.EnrollmentsService;
 import jakarta.inject.Inject;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 public class EnrollmentsController implements IEnrollmentsController {
 
     @Inject
-    private EnrollmentsServiceTableImpl enrollmentsService;
+    private EnrollmentsService enrollmentsService;
 
     @Override
     public HttpResponse<OrganizationModelResponse> createOrganization(String organizationFiscalCode) {

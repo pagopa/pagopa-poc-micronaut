@@ -23,7 +23,7 @@ tables:
   reporting:
     connection: ${STORAGE_PRIMARY_CONNECTION_KEY}
     organizations:
-      table: organization
+      table: organizations
 #end::datasource_table
 ---
 #tag::datasource_sql[]

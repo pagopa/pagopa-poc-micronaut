@@ -1,5 +1,6 @@
 package it.gov.pagopa.reportingorgsenrollment.service;
 
+import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.convert.TypeConverter;
 import it.gov.pagopa.reportingorgsenrollment.entity.OrganizationEntity;
 import it.gov.pagopa.reportingorgsenrollment.exception.AppError;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Secondary
 @Singleton
 public class EnrollmentsServiceImpl implements EnrollmentsService {
 

@@ -7,7 +7,6 @@ import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import it.gov.pagopa.reportingorgsenrollment.repository.OrganizationRepository;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
 
@@ -21,9 +20,6 @@ public class EnrollmentControllerTest {
     @Inject
     @Client("/")
     HttpClient client;
-
-    @Inject
-    private OrganizationRepository organizationRepository;
 
     @BeforeEach
     void setUp() {

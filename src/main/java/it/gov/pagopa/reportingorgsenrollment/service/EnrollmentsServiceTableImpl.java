@@ -5,6 +5,7 @@ import com.azure.data.tables.TableServiceClient;
 import com.azure.data.tables.TableServiceClientBuilder;
 import com.azure.data.tables.models.TableEntity;
 import com.azure.data.tables.models.TableServiceException;
+import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Value;
 import io.micronaut.core.convert.TypeConverter;
 import it.gov.pagopa.reportingorgsenrollment.entity.OrganizationEntity;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Primary
 @Singleton
 @Slf4j
 public class EnrollmentsServiceTableImpl implements EnrollmentsService {
