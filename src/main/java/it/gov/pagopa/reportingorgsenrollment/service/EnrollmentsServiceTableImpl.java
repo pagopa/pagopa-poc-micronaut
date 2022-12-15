@@ -49,14 +49,16 @@ public class EnrollmentsServiceTableImpl implements EnrollmentsService {
             TableEntity entity = new TableEntity(organizationFiscalCode, organizationFiscalCode)
                     .addProperty(FISCAL_CODE_PROPERTY, organizationEntity.getOrganizationFiscalCode())
                     .addProperty(ON_BOARDING_DATE_PROPERTY, organizationEntity.getOrganizationOnBoardingDate().toString());
-
             tableClient.createEntity(entity);
 
             return organizationResponseTypeConverter().convert(organizationEntity, OrganizationModelResponse.class).orElse(null);
         }
         catch (TableServiceException e) {
             log.error("Error in processing create organization", e);
-            throw new AppException(AppError.INTERNAL_ERROR, organizationFiscalCode);
+            if (e.getResponse().getStatusCode() == AppError.ORGANIZATION_DUPLICATED.httpStatus.getCode())
+                throw new AppException(AppError.ORGANIZATION_DUPLICATED, organizationFiscalCode);
+            else
+                throw new AppException(AppError.INTERNAL_ERROR, organizationFiscalCode);
         }
     }
 
@@ -67,11 +69,16 @@ public class EnrollmentsServiceTableImpl implements EnrollmentsService {
                     .connectionString(connectionString)
                     .buildClient();
             TableClient tableClient = tableServiceClient.getTableClient(organizationsTable);
+            // getEntity to be API compliant (delete method is void, but it needs to return 404 if not found: handled by exception)
+            tableClient.getEntity(organizationFiscalCode, organizationFiscalCode);
             tableClient.deleteEntity(organizationFiscalCode, organizationFiscalCode);
         }
         catch (TableServiceException e) {
-            log.error("Error in processing create organization", e);
-            throw new AppException(AppError.INTERNAL_ERROR, organizationFiscalCode);
+            log.error("Error in processing delete organization", e);
+            if (e.getResponse().getStatusCode() == AppError.ORGANIZATION_NOT_FOUND.httpStatus.getCode())
+                throw new AppException(AppError.ORGANIZATION_NOT_FOUND, organizationFiscalCode);
+            else
+                throw new AppException(AppError.INTERNAL_ERROR, organizationFiscalCode);
         }
     }
 
@@ -91,8 +98,11 @@ public class EnrollmentsServiceTableImpl implements EnrollmentsService {
             return organizationResponseTypeConverter().convert(organizationEntity, OrganizationModelResponse.class).orElse(null);
         }
         catch (TableServiceException e) {
-            log.error("Error in processing create organization", e);
-            throw new AppException(AppError.INTERNAL_ERROR, organizationFiscalCode);
+            log.error("Error in processing get organization", e);
+            if (e.getResponse().getStatusCode() == AppError.ORGANIZATION_NOT_FOUND.httpStatus.getCode())
+                throw new AppException(AppError.ORGANIZATION_NOT_FOUND, organizationFiscalCode);
+            else
+                throw new AppException(AppError.INTERNAL_ERROR, organizationFiscalCode);
         }
     }
 
@@ -118,8 +128,8 @@ public class EnrollmentsServiceTableImpl implements EnrollmentsService {
             return organizationModelResponseList;
         }
         catch (TableServiceException e) {
-            log.error("Error in processing create organization", e);
-            throw new AppException(AppError.INTERNAL_ERROR);
+            log.error("Error in processing get organizations list", e);
+            throw new AppException(AppError.INTERNAL_ERROR, "ALL");
         }
     }
 
