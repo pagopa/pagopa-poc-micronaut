@@ -1,20 +1,20 @@
 const axios = require("axios");
 const fs = require('fs');
 
-
+const reporting_enrollment_host = process.env.REPORTING_ENROLLMENT_HOST;
 
 function get(url) {
-    return axios.get(url)
-        .then(res => {
-            return res;
-        })
-        .catch(error => {
-            return error.response;
-        });
+    return axios.get(reporting_enrollment_host + url)
+         .then(res => {
+             return res;
+         })
+         .catch(error => {
+             return error.response;
+         });
 }
 
-function post(url, body) {
-    return axios.post(url, body)
+function post(url, headers, body) {
+    return axios.post(reporting_enrollment_host + url, body, {headers})
         .then(res => {
             return res;
         })
@@ -24,7 +24,7 @@ function post(url, body) {
 }
 
 function put(url, body) {
-    return axios.put(url, body)
+    return axios.put(reporting_enrollment_host + url, body)
         .then(res => {
             return res;
         })
@@ -35,7 +35,7 @@ function put(url, body) {
 
 
 function del(url) {
-    return axios.delete(url)
+    return axios.delete(reporting_enrollment_host + url)
         .then(res => {
             return res;
         })
@@ -44,20 +44,9 @@ function del(url) {
         });
 }
 
-function call(method, url, body) {
-    if (method === 'GET') {
-        return get(url)
-    }
-    if (method === 'POST') {
-        return post(url, body)
-    }
-    if (method === 'PUT') {
-        return put(url, body)
-    }
-    if (method === 'DELETE') {
-        return del(url)
-    }
-
+function randomOrg() {
+    return "Org_" + Math.floor(Math.random() * 100);
 }
 
-module.exports = {get, post, put, del, call}
+
+module.exports = {get, post, put, del, randomOrg}
