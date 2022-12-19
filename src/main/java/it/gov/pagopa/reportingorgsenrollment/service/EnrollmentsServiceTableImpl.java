@@ -42,10 +42,8 @@ public class EnrollmentsServiceTableImpl implements EnrollmentsService {
         OrganizationEntity organizationEntity = new OrganizationEntity(organizationFiscalCode, LocalDateTime.now());
 
         try {
-            TableServiceClient tableServiceClient = new TableServiceClientBuilder()
-                .connectionString(connectionString)
-                .buildClient();
-            TableClient tableClient = tableServiceClient.getTableClient(organizationsTable);
+            TableClient tableClient = getOrganizationTable();
+
             TableEntity entity = new TableEntity(organizationFiscalCode, organizationFiscalCode)
                     .addProperty(FISCAL_CODE_PROPERTY, organizationEntity.getOrganizationFiscalCode())
                     .addProperty(ON_BOARDING_DATE_PROPERTY, organizationEntity.getOrganizationOnBoardingDate().toString());
@@ -65,10 +63,8 @@ public class EnrollmentsServiceTableImpl implements EnrollmentsService {
     @Override
     public void removeOrganization(String organizationFiscalCode) {
         try {
-            TableServiceClient tableServiceClient = new TableServiceClientBuilder()
-                    .connectionString(connectionString)
-                    .buildClient();
-            TableClient tableClient = tableServiceClient.getTableClient(organizationsTable);
+            TableClient tableClient = getOrganizationTable();
+
             // getEntity to be API compliant (delete method is void, but it needs to return 404 if not found: handled by exception)
             tableClient.getEntity(organizationFiscalCode, organizationFiscalCode);
             tableClient.deleteEntity(organizationFiscalCode, organizationFiscalCode);
@@ -85,11 +81,7 @@ public class EnrollmentsServiceTableImpl implements EnrollmentsService {
     @Override
     public OrganizationModelResponse getOrganization(String organizationFiscalCode) {
         try {
-            TableServiceClient tableServiceClient = new TableServiceClientBuilder()
-                    .connectionString(connectionString)
-                    .buildClient();
-            TableClient tableClient = tableServiceClient.getTableClient(organizationsTable);
-            TableEntity tableEntity = tableClient.getEntity(organizationFiscalCode, organizationFiscalCode);
+            TableEntity tableEntity = getOrganizationTable().getEntity(organizationFiscalCode, organizationFiscalCode);
             OrganizationEntity organizationEntity = new OrganizationEntity(
                     tableEntity.getProperty(FISCAL_CODE_PROPERTY).toString(),
                     LocalDateTime.parse(tableEntity.getProperty(ON_BOARDING_DATE_PROPERTY).toString())
@@ -111,10 +103,7 @@ public class EnrollmentsServiceTableImpl implements EnrollmentsService {
         List<OrganizationModelResponse> organizationModelResponseList = new ArrayList<>();
 
         try {
-            TableServiceClient tableServiceClient = new TableServiceClientBuilder()
-                    .connectionString(connectionString)
-                    .buildClient();
-            TableClient tableClient = tableServiceClient.getTableClient(organizationsTable);
+            TableClient tableClient = getOrganizationTable();
 
             for (TableEntity entity : tableClient.listEntities()) {
                 organizationModelResponseList.add(
@@ -130,6 +119,18 @@ public class EnrollmentsServiceTableImpl implements EnrollmentsService {
         catch (TableServiceException e) {
             log.error("Error in processing get organizations list", e);
             throw new AppException(AppError.INTERNAL_ERROR, "ALL");
+        }
+    }
+
+    private TableClient getOrganizationTable() {
+        try {
+            TableServiceClient tableServiceClient = new TableServiceClientBuilder()
+                    .connectionString(connectionString)
+                    .buildClient();
+            return tableServiceClient.getTableClient(organizationsTable);
+        } catch (TableServiceException e) {
+            log.error("Error in organization table connection", e);
+            throw new AppException(AppError.INTERNAL_ERROR);
         }
     }
 
