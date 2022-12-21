@@ -3,7 +3,8 @@
     {
       "env": "local",
       "host": "http://localhost:8080",
-      "basePath": ""
+      "basePath": "organizations",
+      "numberOfEventsToPreload":"100"
     }
   ]
 }
