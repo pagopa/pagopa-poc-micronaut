@@ -26,3 +26,7 @@ export function getOrganization(rootUrl, organizationFiscalCode) {
 	const url = `${rootUrl}/${organizationFiscalCode}`
     return http.get(url);
 }
+
+export function getOrganizations(rootUrl) {
+    return http.get(rootUrl);
+}

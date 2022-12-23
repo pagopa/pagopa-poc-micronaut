@@ -2,7 +2,7 @@ import http from 'k6/http';
 import {check} from 'k6';
 import {SharedArray} from 'k6/data';
 import { getMockFiscalCode, getRandomItemFromArray } from './modules/helpers.js';
-import { getOrganization, postOrganization, deleteOrganization } from "./modules/client.js";
+import { getOrganizations, postOrganization, deleteOrganization } from "./modules/client.js";
 
 export let options = JSON.parse(open(__ENV.TEST_TYPE));
 
@@ -57,21 +57,14 @@ function precondition() {
     // no pre conditions
 }
 
-function postcondition() {
-
-    // Delete the new entity created
-}
-
 export default function (data) {
     let tag = {
-        gpsMethod: "GET organization",
+        gpsMethod: "GET organizations",
     };
 
-    let url = `${rootUrl}`;
-    let organizationFiscalCode = getRandomItemFromArray(data.fcs);
-    let res = getOrganization(url, organizationFiscalCode);
+    let res = getOrganizations(rootUrl);
 
-    console.log(`GetOrganization/${organizationFiscalCode} -> ${res.status}`);
+    console.log(`GetOrganizations-> ${res.status}`);
 
     check(res, {
         'check status is 200': (_r) => res.status === 200,
