@@ -13,8 +13,8 @@ let service;
 
 // Given
 
-Given('a random id organization', async function () {
-    idOrg = randomOrg();
+Given('an organization with id {string}', async function (id) {
+    idOrg = id;
     // precondition -> deletion possible dirty data
     await removeOrganization(idOrg);
 });

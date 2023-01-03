@@ -4,7 +4,7 @@ Feature: All about Organizations
     Reporting Enrollment running
 
   Scenario: An organization creates an enrollment
-    Given a random id organization
+    Given an organization with id "UNKNOW"
     When the organization "creates" enrollment
     Then the organization gets the status code 201
 
@@ -26,12 +26,12 @@ Feature: All about Organizations
 # 404
 
   Scenario: An organization deletes an enrollment that does not exist
-    Given a random id organization
+    Given an organization with id "UNKNOW"
     When the organization "deletes" enrollment
     Then the organization gets the status code 404
 
   Scenario: An organization get an enrollment that does not exist
-  	Given a random id organization
+  	Given an organization with id "UNKNOW"
   	When the organization "gets" enrollment
   	Then the organization gets the status code 404
 
