@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Primary
 @Singleton
 @Slf4j
 public class EnrollmentsServiceTableImpl implements EnrollmentsService {
