@@ -1,6 +1,5 @@
 version: '3.8'
 
-# TODO edit this file properly
 services:
   app:
     container_name: 'app'
