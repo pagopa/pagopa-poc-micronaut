@@ -1,5 +1,6 @@
 package it.gov.pagopa.reportingorgsenrollment.service;
 
+import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.convert.TypeConverter;
 import it.gov.pagopa.reportingorgsenrollment.entity.OrganizationEntity;
 import it.gov.pagopa.reportingorgsenrollment.exception.AppError;
@@ -34,7 +35,7 @@ public class EnrollmentsServiceImpl implements EnrollmentsService {
 
     @Override
     public void removeOrganization(String organizationFiscalCode) {
-        if( organizationRepository.findByFiscalCode(organizationFiscalCode).isPresent())
+        if(organizationRepository.findByFiscalCode(organizationFiscalCode).isPresent())
             organizationRepository.deleteByFiscalCode(organizationFiscalCode);
         else
             throw new AppException(AppError.ORGANIZATION_NOT_FOUND, organizationFiscalCode);

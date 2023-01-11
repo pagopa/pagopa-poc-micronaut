@@ -10,8 +10,10 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import it.gov.pagopa.reportingorgsenrollment.model.response.OrganizationModelResponse;
 import it.gov.pagopa.reportingorgsenrollment.service.EnrollmentsService;
 import it.gov.pagopa.reportingorgsenrollment.service.EnrollmentsServiceImpl;
+import it.gov.pagopa.reportingorgsenrollment.service.EnrollmentsServiceTableImpl;
 import it.gov.pagopa.reportingorgsenrollment.util.TestUtil;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -111,7 +113,7 @@ public class EnrollmentControllerMockTest {
         );
     }
 
-    @MockBean(EnrollmentsServiceImpl.class)
+    @MockBean(EnrollmentsServiceTableImpl.class)
     EnrollmentsService enrollmentsService() {
         return mock(EnrollmentsService.class);
     }
