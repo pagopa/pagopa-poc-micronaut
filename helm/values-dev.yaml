@@ -1,21 +1,21 @@
 microservice-chart:
-  namespace: "your-namespace" # TODO: set your AKS namespace
+  namespace: "shared"
   nameOverride: ""
   fullnameOverride: ""
   image:
-    repository: pagopadcommonacr.azurecr.io/yourname # TODO
+    repository: pagopadcommonacr.azurecr.io/pagopaapocmicronaut
     tag: "0.0.3"
     pullPolicy: Always
   livenessProbe:
     httpGet:
-      path: /actuator/health/liveness
+      path: /info
       port: 8080
     initialDelaySeconds: 90
     failureThreshold: 6
     periodSeconds: 10
   readinessProbe:
     httpGet:
-      path: /actuator/health/readiness
+      path: /info
       port: 8080
     initialDelaySeconds: 90
     failureThreshold: 6
@@ -28,8 +28,8 @@ microservice-chart:
     port: 8080
   ingress:
     create: true
-    host: "your.host" # TODO: set the host
-    path: /your-path-here/(.*) # TODO: set your path
+    host: "weudev.shared.internal.dev.platform.pagopa.it"
+    path: /pagopa-poc-micronaut-service/(.*)
   serviceAccount:
     create: false
     annotations: {}
@@ -42,15 +42,15 @@ microservice-chart:
     allowPrivilegeEscalation: false
   resources:
     requests:
-      memory: "512Mi"
-      cpu: "0.25"
+      memory: "384Mi"
+      cpu: "0.20"
     limits:
       memory: "512Mi"
-      cpu: "0.25"
+      cpu: "0.30"
   autoscaling:
     enable: true
-    minReplica: 3
-    maxReplica: 10
+    minReplica: 1
+    maxReplica: 2
     pollingInterval: 10 # seconds
     cooldownPeriod: 50 # seconds
     triggers:
@@ -60,13 +60,16 @@ microservice-chart:
           type: Utilization # Allowed types are 'Utilization' or 'AverageValue'
           value: "75"
   envConfig:
-    # TODO: set your name
-    WEBSITE_SITE_NAME: 'yourProjectName' # required to show cloud role name in application insights
+    WEBSITE_SITE_NAME: 'pagopa-d-poc-micronaut-service' # required to show cloud role name in application insights
+    ENV: 'azure-d-aks'
+    LOGGING_LEVEL: "INFO"
+    ORGANIZATIONS_TABLE: 'organizations'
   envSecret:
     # required
+    STORAGE_PRIMARY_CONNECTION_KEY: "poc-reporting-enrollment-d-sa-connection-string"
     APPLICATIONINSIGHTS_CONNECTION_STRING: 'ai-d-connection-string'
   keyvault:
-    name: "pagopa-d-afm-kv"
+    name: "pagopa-d-shared-kv"
     tenantId: "7788edaf-0346-4068-9d79-c868aed15b3d"
   nodeSelector: {}
   tolerations: []
