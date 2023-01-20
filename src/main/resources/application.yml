@@ -5,7 +5,7 @@ info:
     artifactId: ReportingOrgsEnrollment
     version: 0.0.1
   properties:
-    environment: {ENV}
+    environment: ${ENV}
 ---
 # micronaut settings:
 micronaut:
