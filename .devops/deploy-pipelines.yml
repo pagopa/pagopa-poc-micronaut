@@ -47,6 +47,7 @@ variables:
     poolImage: 'pagopa-dev-linux'
     appInsightsServiceConn: "$(TF_APPINSIGHTS_SERVICE_CONN_DEV)"
     appInsightsResourceId: "$(TF_APPINSIGHTS_RESOURCE_ID_DEV)"
+    pocReportingEnrollmentSubKey: "$(DEV_POC_ENROLLMENT_SUB_KEY)"
   ${{ if eq(parameters['ENV'], 'uat') }}:
     dockerRegistryServiceConnection: $(UAT_CONTAINER_REGISTRY_SERVICE_CONN)
     dockerRegistryFqdn: $(UAT_CONTAINER_NAMESPACE)
