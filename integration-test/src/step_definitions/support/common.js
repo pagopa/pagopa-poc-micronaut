@@ -14,7 +14,7 @@ function get(url, config) {
          });
 }
 
-function post(url, body, config) {
+function post(url, config, body) {
     return axios.post(reporting_enrollment_host + url, body, config)
         .then(res => {
             return res;
@@ -24,7 +24,7 @@ function post(url, body, config) {
         });
 }
 
-function put(url, body, config) {
+function put(url, config, body) {
     return axios.put(reporting_enrollment_host + url, body, config)
         .then(res => {
             return res;
