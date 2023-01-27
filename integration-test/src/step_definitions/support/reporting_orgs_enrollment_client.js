@@ -5,24 +5,31 @@ function healthCheckInfo() {
 }
 
 function getOrganizations() {
-    return get(`/organizations`)
+    return get(`/organizations`, {
+        params: { frameworkType: 'micronaut' }
+    })
 }
 
 function getOrganization(idOrg) {
-    return get(`/organizations/${idOrg}`)
+    return get(`/organizations/${idOrg}`, {
+        params: { frameworkType: 'micronaut' }
+    })
 }
 
 function createOrganization(idOrg) {
-    const headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    }
-
-    return post(`/organizations/${idOrg}`, headers)
+    return post(`/organizations/${idOrg}`, {
+        params: { frameworkType: 'micronaut' },
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
 }
 
 function removeOrganization(idOrg) {
-    return del(`/organizations/${idOrg}`)
+    return del(`/organizations/${idOrg}`, {
+        params: { frameworkType: 'micronaut' }
+    })
 }
 
 
