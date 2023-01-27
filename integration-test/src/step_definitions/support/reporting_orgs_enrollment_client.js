@@ -15,7 +15,7 @@ function getOrganization(idOrg) {
 function createOrganization(idOrg) {
     const headers = {
         'Accept': 'application/json',
-        'Content-Type': '',
+        'Content-Type': 'application/json'
     }
 
     return post(`/organizations/${idOrg}`, headers)
