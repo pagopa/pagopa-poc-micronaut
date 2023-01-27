@@ -218,5 +218,6 @@ stages:
               targetType: 'inline'
               script: |
                 cd ./integration-test/src
+                export ORG_ENROLLMENT_SUBSCRIPTION_KEY=${{ variables.pocReportingEnrollmentSubKey }}
                 yarn install
                 yarn test:${{ parameters.ENV }}

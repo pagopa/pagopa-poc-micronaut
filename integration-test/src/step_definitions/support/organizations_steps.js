@@ -23,7 +23,6 @@ Given('a valid enrollment', async function () {
 	idOrg = randomOrg();
 	// precondition -> creation of an organization to delete
     responseToCheck = await createOrganization(idOrg);
-    console.log(responseToCheck);
     assert.strictEqual(responseToCheck.status, 201);
     // save data
     organization = responseToCheck.data;
