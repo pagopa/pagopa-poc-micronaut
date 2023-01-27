@@ -10,8 +10,9 @@ RUN mvn -f /home/app/pom.xml clean package -Dmaven.test.skip=true
 #
 # Package stage
 #
-FROM adoptopenjdk/openjdk16:alpine
-COPY --from=build /home/app/target/ReportingOrgsEnrollment-*.jar /usr/local/lib/app.jar
-RUN true
+FROM openjdk:17-alpine
+WORKDIR /home/app
+COPY target/classes /home/app/classes
+COPY target/dependency/* /home/app/libs/
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/usr/local/lib/app.jar"]
+ENTRYPOINT ["java", "-cp", "/home/app/libs/*:/home/app/classes/", "it.gov.pagopa.reportingorgsenrollment.Application"]
