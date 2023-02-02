@@ -76,7 +76,7 @@ stages:
           - task: Docker@2
             displayName: "Docker login"
             inputs:
-              containerRegistry: "$(DEV_CONTAINER_REGISTRY_SERVICE_CONN)"
+              containerRegistry: "$(DEV_CONTAINER_REGISTRY)"
               command: "login"
 
           - task: Bash@3
