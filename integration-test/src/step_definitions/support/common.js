@@ -2,7 +2,6 @@ const axios = require("axios");
 const fs = require('fs');
 
 const reporting_enrollment_host = process.env.REPORTING_ENROLLMENT_HOST;
-const params = new URLSearchParams([['frameworkType', 'micronaut']]);
 
 function get(url, config) {
     return axios.get(reporting_enrollment_host + url, config)
@@ -14,8 +13,8 @@ function get(url, config) {
          });
 }
 
-function post(url, config, body) {
-    return axios.post(reporting_enrollment_host + url, body, config)
+function post(url, config) {
+    return axios.post(reporting_enrollment_host + url, config)
         .then(res => {
             return res;
         })
@@ -25,7 +24,7 @@ function post(url, config, body) {
 }
 
 function put(url, config, body) {
-    return axios.put(reporting_enrollment_host + url, body, config)
+    return axios.put(reporting_enrollment_host + url, config)
         .then(res => {
             return res;
         })

@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.gov.pagopa</groupId>
-    <artifactId>ReportingOrgsEnrollment</artifactId>
+    <artifactId>reporting-orgs-enrollment</artifactId>
     <version>0.0.1</version>
     <name>PagoPA API - Reporting Organizations Enrollments</name>
     <description>Reporting orgs enrollment project</description>
@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-parent</artifactId>
-        <version>3.7.2</version>
+        <version>3.7.3</version>
     </parent>
 
     <properties>
@@ -150,7 +150,19 @@
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
             </plugin>
-
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <configuration>
+                    <buildArgs combine.children="append">
+                        <buildArg>--verbose</buildArg>
+                        <buildArg>--initialize-at-build-time=org.codehaus.stax2.typed.Base64Variants</buildArg>
+                        <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                        <buildArg>-H:+AddAllCharsets</buildArg>
+                        <buildArg>--initialize-at-build-time=com.azure.data.tables.implementation.models</buildArg>
+                    </buildArgs>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
