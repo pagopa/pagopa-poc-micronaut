@@ -1,9 +1,6 @@
 # azure-pipelines.yml
 trigger: none
 
-pool:
-  name: performance-test-linux
-
 parameters:
   - name: "ENVIRONMENT"
     displayName: "Environment"
@@ -30,9 +27,14 @@ parameters:
 
 variables:
   ${{ if eq(parameters['ENVIRONMENT'], 'dev') }}:
+    poolImage: 'pagopa-dev-loadtest-linux'
     orgEnrollmentSubscriptionKey: '$(DEV_POC_ENROLLMENT_SUB_KEY)'
   ${{ if eq(parameters['ENVIRONMENT'], 'uat') }}:
-    orgEnrollmentSubscriptionKey: '$(DEV_POC_ENROLLMENT_SUB_KEY)'
+    poolImage: 'pagopa-uat-loadtest-linux'
+    orgEnrollmentSubscriptionKey: '$(UAT_POC_ENROLLMENT_SUB_KEY)'
+
+pool:
+  name: $(poolImage)
 
 steps:
   - script: |
