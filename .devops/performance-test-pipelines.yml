@@ -43,10 +43,11 @@ steps:
     displayName: Pull k6 image
 
   - script: |
+      cd ./performance-test/src
       docker run \
         -v ${PWD}:/script \
         -e ORG_ENROLLMENT_SUBSCRIPTION_KEY=$(orgEnrollmentSubscriptionKey) \
         -e VARS=${{ parameters.ENVIRONMENT }}.environment.json \
         -e TEST_TYPE=./test-types/${{ parameters.TEST_TYPE }}.json \
-        grafana/k6 run /script/${{ parameters.SCRIPT }}.js \
+        grafana/k6 run /script/${{ parameters.SCRIPT }}.js
     displayName: Run k6 ${{ parameters.SCRIPT }} on ${{ parameters.ENVIRONMENT }}
