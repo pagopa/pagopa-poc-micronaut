@@ -1,0 +1,18 @@
+FROM ghcr.io/graalvm/native-image:ol7-java11-22.2.0 AS builder
+WORKDIR /home/app
+
+COPY classes /home/app/classes
+COPY dependency/* /home/app/libs/
+ENV CLASS_NAME=it.gov.pagopa.reportingorgsenrollment.Application
+ENV GRAALVM_ARGS="-H:+ReportExceptionStackTraces --initialize-at-build-time=org.codehaus.stax2.typed.Base64Variants -H:+AddAllCharsets -H:DynamicProxyConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/proxy-config.json -H:JNIConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/jni-config.json -H:ReflectionConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/reflect-config.json -H:ResourceConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/resource-config.json -H:SerializationConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/serialization-config.json --initialize-at-build-time=com.azure.data.tables.implementation.models"
+ENV USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM=false
+RUN native-image ${GRAALVM_ARGS} -H:Class=${CLASS_NAME} -H:Name=application --no-fallback -cp "/home/app/libs/*:/home/app/classes/"
+
+FROM frolvlad/alpine-glibc:alpine-3.12
+ARG EXTRA_CMD
+RUN if [[ -n "${EXTRA_CMD}" ]] ; then eval ${EXTRA_CMD} ; fi
+COPY --from=builder /home/app/application /app/application
+
+ARG PORT=8080
+EXPOSE ${PORT}
+ENTRYPOINT ["/app/application"]

@@ -13,8 +13,8 @@ function get(url, config) {
          });
 }
 
-function post(url, config) {
-    return axios.post(reporting_enrollment_host + url, config)
+function post(url, body, config) {
+    return axios.post(reporting_enrollment_host + url, body, config)
         .then(res => {
             return res;
         })
@@ -23,8 +23,8 @@ function post(url, config) {
         });
 }
 
-function put(url, config, body) {
-    return axios.put(reporting_enrollment_host + url, config)
+function put(url, body, config) {
+    return axios.put(reporting_enrollment_host + url, body, config)
         .then(res => {
             return res;
         })
@@ -34,8 +34,8 @@ function put(url, config, body) {
 }
 
 
-function del(url, config) {
-    return axios.delete(reporting_enrollment_host + url, config)
+function del(url, body, config) {
+    return axios.delete(reporting_enrollment_host + url, body, config)
         .then(res => {
             return res;
         })

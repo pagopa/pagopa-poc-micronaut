@@ -14,7 +14,6 @@ parameters:
     values:
       - "dev"
       - "uat"
-      - "prod"
   - name: "TEST_TYPE"
     displayName: "Test type"
     type: string
@@ -22,13 +21,15 @@ parameters:
       - "load"
       - "spike"
       - "stress"
-      - "soak"
-      - # TODO: add your values
+      - "smoke"
   - name: "SCRIPT"
     displayName: "Script name"
     type: string
     values:
-      - yourscriptname # TODO: add your script
+      - create_organization
+      - delete_organization
+      - get_organization
+      - get_organizations
 
 steps:
   - script: |
@@ -36,11 +37,10 @@ steps:
       docker pull grafana/k6
     displayName: Pull k6 image
 
-    # TODO: add your env params
   - script: |
       docker run \
         -v ${PWD}:/script \
-        -e API_SUBSCRIPTION_KEY=${{ parameters.API_SUBSCRIPTION_KEY }} \
+        -e ORG_ENROLLMENT_SUBSCRIPTION_KEY=${{ parameters.API_SUBSCRIPTION_KEY }} \
         -e VARS=${{ parameters.ENVIRONMENT }}.environment.json \
         -e TEST_TYPE=./test-types/${{ parameters.TEST_TYPE }}.json \
         grafana/k6 run /script/${{ parameters.SCRIPT }}.js \

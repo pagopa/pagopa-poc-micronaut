@@ -1,50 +1,66 @@
 const {post, get, del} = require("./common");
 
 function healthCheckInfo() {
-    return get(`/info`, {
-        params: { frameworkType: 'micronaut' },
+    let config = {
+        params: {
+            "frameworkType": "micronaut"
+        },
         headers: {
             'Ocp-Apim-Subscription-Key': process.env.ORG_ENROLLMENT_SUBSCRIPTION_KEY
         }
-    })
+    };
+    return get(`/info`, config);
 }
 
 function getOrganizations() {
-    return get(`/organizations`, {
-        params: { frameworkType: 'micronaut' },
+    let config = {
+        params: {
+            "frameworkType": "micronaut"
+        },
         headers: {
             'Ocp-Apim-Subscription-Key': process.env.ORG_ENROLLMENT_SUBSCRIPTION_KEY
         }
-    })
+    };
+    return get(`/organizations`, config);
 }
 
 function getOrganization(idOrg) {
-    return get(`/organizations/${idOrg}`, {
-        params: { frameworkType: 'micronaut' },
+    let config = {
+        params: {
+            "frameworkType": "micronaut"
+        },
         headers: {
             'Ocp-Apim-Subscription-Key': process.env.ORG_ENROLLMENT_SUBSCRIPTION_KEY
         }
-    })
+    };
+    return get(`/organizations/${idOrg}`, config);
 }
 
 function createOrganization(idOrg) {
-    return post(`/organizations/${idOrg}`, {
-        params: { frameworkType: 'micronaut' },
+    let config = {
+        params: {
+            "frameworkType": "micronaut"
+        },
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Ocp-Apim-Subscription-Key': process.env.ORG_ENROLLMENT_SUBSCRIPTION_KEY
-        },
-    })
+        }
+    };
+    return post(`/organizations/${idOrg}`, {}, config);
 }
 
 function removeOrganization(idOrg) {
-    return del(`/organizations/${idOrg}`, {
-        params: { frameworkType: 'micronaut' },
+    let config = {
+        params: {
+            "frameworkType": "micronaut"
+        },
         headers: {
+            'Content-Type': 'application/json',
             'Ocp-Apim-Subscription-Key': process.env.ORG_ENROLLMENT_SUBSCRIPTION_KEY
         }
-    })
+    };
+    return del(`/organizations/${idOrg}`, config);
 }
 
 
