@@ -5,9 +5,6 @@ pool:
   name: performance-test-linux
 
 parameters:
-  - name: "API_SUBSCRIPTION_KEY"
-    displayName: "API_SUBSCRIPTION_KEY"
-    type: string
   - name: "ENVIRONMENT"
     displayName: "Environment"
     type: string
@@ -31,6 +28,12 @@ parameters:
       - get_organization
       - get_organizations
 
+variables:
+  ${{ if eq(parameters['ENVIRONMENT'], 'dev') }}:
+    orgEnrollmentSubscriptionKey: '$(DEV_POC_ENROLLMENT_SUB_KEY)'
+  ${{ if eq(parameters['ENVIRONMENT'], 'uat') }}:
+    orgEnrollmentSubscriptionKey: '$(DEV_POC_ENROLLMENT_SUB_KEY)'
+
 steps:
   - script: |
       cd ./performance-tests/src
@@ -40,7 +43,7 @@ steps:
   - script: |
       docker run \
         -v ${PWD}:/script \
-        -e ORG_ENROLLMENT_SUBSCRIPTION_KEY=${{ parameters.API_SUBSCRIPTION_KEY }} \
+        -e ORG_ENROLLMENT_SUBSCRIPTION_KEY=$(orgEnrollmentSubscriptionKey) \
         -e VARS=${{ parameters.ENVIRONMENT }}.environment.json \
         -e TEST_TYPE=./test-types/${{ parameters.TEST_TYPE }}.json \
         grafana/k6 run /script/${{ parameters.SCRIPT }}.js \
