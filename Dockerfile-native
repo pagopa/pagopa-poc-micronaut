@@ -1,10 +1,16 @@
-FROM ghcr.io/graalvm/native-image:ol7-java11-22.2.0 AS builder
-WORKDIR /home/app
+FROM maven:3.8.4-jdk-11-slim as buildtime
+WORKDIR /build
+COPY . .
+RUN mvn clean package -Dmaven.test.skip=true
+RUN mvn dependency:copy-dependencies
 
-COPY classes /home/app/classes
-COPY dependency/* /home/app/libs/
+FROM ghcr.io/graalvm/native-image:ol7-java11-22.2.0 as builder
+WORKDIR /home/app
+COPY --from=buildtime build/target/classes /home/app/classes
+COPY --from=buildtime build/target/dependency/* /home/app/libs/
+COPY --from=buildtime build/native-image/* /home/app/classes/native-image
 ENV CLASS_NAME=it.gov.pagopa.reportingorgsenrollment.Application
-ENV GRAALVM_ARGS="-H:+ReportExceptionStackTraces --initialize-at-build-time=org.codehaus.stax2.typed.Base64Variants -H:+AddAllCharsets -H:DynamicProxyConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/proxy-config.json -H:JNIConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/jni-config.json -H:ReflectionConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/reflect-config.json -H:ResourceConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/resource-config.json -H:SerializationConfigurationResources=./native-image/it.gov.pagopa/ReportingOrgsEnrollment/serialization-config.json --initialize-at-build-time=com.azure.data.tables.implementation.models"
+ENV GRAALVM_ARGS="-H:+ReportExceptionStackTraces --initialize-at-build-time=org.codehaus.stax2.typed.Base64Variants -H:+AddAllCharsets -H:DynamicProxyConfigurationResources=./native-image/proxy-config.json -H:JNIConfigurationResources=./native-image/jni-config.json -H:ReflectionConfigurationResources=./native-image/reflect-config.json -H:ResourceConfigurationResources=./native-image/resource-config.json -H:SerializationConfigurationResources=./native-image/serialization-config.json --initialize-at-build-time=com.azure.data.tables.implementation.models"
 ENV USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM=false
 RUN native-image ${GRAALVM_ARGS} -H:Class=${CLASS_NAME} -H:Name=application --no-fallback -cp "/home/app/libs/*:/home/app/classes/"
 
