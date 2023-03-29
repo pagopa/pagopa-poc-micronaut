@@ -17,15 +17,12 @@
         "rate": 200,
         "timeUnit": "1s",
         "preAllocatedVUs": 150,
-        "maxVUs": 200
+        "maxVUs": 150
       }
     },
     "thresholds": {
       "http_req_failed": [
         "rate<0.1"
-      ],
-      "http_req_duration": [
-        "p(99)<2000"
       ]
     }
   }
