@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import it.gov.pagopa.reportingorgsenrollment.model.AppInfo;
+import it.gov.pagopa.reportingorgsenrollment.model.AppStats;
 import it.gov.pagopa.reportingorgsenrollment.model.ProblemJson;
 
 @ExecuteOn(TaskExecutors.IO)
@@ -56,5 +57,22 @@ public class BaseController {
                 .environment(environment)
                 .build();
         return HttpResponse.status(HttpStatus.OK).body(info);
+    }
+
+    @Operation(summary = "stats", description = "Return performance stats", security = {@SecurityRequirement(name = "ApiKey")}, tags = {"Base"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = AppInfo.class))),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = ProblemJson.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "429", description = "Too many requests", content = @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "500", description = "Service unavailable", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = ProblemJson.class)))})
+    @Get(value = "/stats")
+    public HttpResponse<AppStats> stats() {
+        // Used just for health checking
+        AppStats stat = AppStats.builder()
+                               .cpu(80.0f)
+                               .build();
+        return HttpResponse.status(HttpStatus.OK).body(stat);
     }
 }

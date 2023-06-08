@@ -54,6 +54,12 @@ microservice-chart:
     pollingInterval: 10 # seconds
     cooldownPeriod: 50 # seconds
     triggers:
+      - type: metrics-api
+        metadata:
+          targetValue: "79.0"
+          activationTargetValue: "60.0"
+          url: "http://localhost:8080/stats"
+          valueLocation: "cpu"
       - type: cpu
         metadata:
           # Required
