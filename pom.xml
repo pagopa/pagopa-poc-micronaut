@@ -38,6 +38,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.micronaut.micrometer</groupId>
+            <artifactId>micronaut-micrometer-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${mockito-junit.version}</version>
@@ -206,6 +211,11 @@
                             <groupId>io.micronaut.openapi</groupId>
                             <artifactId>micronaut-openapi</artifactId>
                             <version>${micronaut-openapi.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut.micrometer</groupId>
+                            <artifactId>micronaut-micrometer-annotation</artifactId>
+                            <version>${micronaut.micrometer.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
