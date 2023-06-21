@@ -56,14 +56,8 @@ microservice-chart:
     triggers:
       - type: metrics-api
         metadata:
-          targetValue: "20.0"
-          activationTargetValue: "10.0"
-          url: "http://localhost:8080/metrics/http.web.request.mean"
-      - type: cpu
-        metadata:
-          # Required
-          type: Utilization # Allowed types are 'Utilization' or 'AverageValue'
-          value: "75"
+          targetValue: "0.1"
+          url: "http://localhost:8080/metrics/http.web.request.mean?seconds=100"
   envConfig:
     WEBSITE_SITE_NAME: 'pagopa-d-poc-micronaut-service' # required to show cloud role name in application insights
     ENV: 'azure-d-aks'

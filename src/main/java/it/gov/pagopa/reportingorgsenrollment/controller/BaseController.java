@@ -23,6 +23,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import it.gov.pagopa.reportingorgsenrollment.model.AppInfo;
 import it.gov.pagopa.reportingorgsenrollment.model.ProblemJson;
 import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -31,6 +33,8 @@ import java.util.concurrent.TimeUnit;
 @ExecuteOn(TaskExecutors.IO)
 @Controller()
 public class BaseController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 
     @Value("${info.application.artifactId}")
     private String name;
@@ -95,6 +99,8 @@ public class BaseController {
             this.meterRegistry.clear();
             referenceTime = Instant.now();
         }
+
+        LOGGER.info("metrics/http.web.request.mean called, value: " + meanTimePerRequest);
 
         return meanTimePerRequest;
     }
