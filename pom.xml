@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.gov.pagopa</groupId>
     <artifactId>reporting-orgs-enrollment</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>PagoPA API - Reporting Organizations Enrollments</name>
     <description>Reporting orgs enrollment project</description>
     <packaging>${packaging}</packaging>
