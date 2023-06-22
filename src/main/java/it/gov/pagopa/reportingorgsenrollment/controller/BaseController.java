@@ -105,6 +105,7 @@ public class BaseController {
 
         AppMetric metrics = AppMetric.builder()
                                 .meanTimePerRequest(meanTimePerRequest)
+                                .cpu(80.0f)
                                 .build();
         return HttpResponse.status(HttpStatus.OK).body(metrics);
     }

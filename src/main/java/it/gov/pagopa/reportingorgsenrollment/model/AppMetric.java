@@ -12,4 +12,5 @@ import lombok.*;
 public class AppMetric {
 
     private float meanTimePerRequest;
+    private float cpu;
 }
