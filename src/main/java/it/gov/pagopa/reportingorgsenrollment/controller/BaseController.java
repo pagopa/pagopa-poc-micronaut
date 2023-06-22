@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import it.gov.pagopa.reportingorgsenrollment.model.AppInfo;
+import it.gov.pagopa.reportingorgsenrollment.model.AppMetric;
 import it.gov.pagopa.reportingorgsenrollment.model.ProblemJson;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
@@ -46,7 +47,7 @@ public class BaseController {
     private String environment;
 
     @Value("${time.mean.default}")
-    private double defaultMeanTime;
+    private float defaultMeanTime;
 
     private MeterRegistry meterRegistry;
     private Instant referenceTime = Instant.now();
@@ -81,10 +82,10 @@ public class BaseController {
         return HttpResponse.status(HttpStatus.OK).body(info);
     }
 
-    @Get("/metrics/http.web.request.mean")
+    @Get("/metrics/custom")
     @Timed
-    public double getMeanTimePerRequest(@QueryValue("seconds") Integer seconds) {
-        double meanTimePerRequest;
+    public HttpResponse<AppMetric> getMeanTimePerRequest() {
+        float meanTimePerRequest;
 
         Timer timer = this.meterRegistry
                               .find("http.server.requests")
@@ -92,9 +93,9 @@ public class BaseController {
 
         if(timer == null)
             meanTimePerRequest = defaultMeanTime;
-        else meanTimePerRequest = timer.mean(TimeUnit.MILLISECONDS);
+        else meanTimePerRequest = (float) timer.mean(TimeUnit.MILLISECONDS);
 
-        boolean isTimeElapsed = Duration.between(referenceTime, Instant.now()).toSeconds() >= seconds;
+        boolean isTimeElapsed = Duration.between(referenceTime, Instant.now()).toSeconds() >= 10;
         if(isTimeElapsed) {
             this.meterRegistry.clear();
             referenceTime = Instant.now();
@@ -102,6 +103,9 @@ public class BaseController {
 
         LOGGER.info("metrics/http.web.request.mean called, value: " + meanTimePerRequest);
 
-        return meanTimePerRequest;
+        AppMetric metrics = AppMetric.builder()
+                                .meanTimePerRequest(meanTimePerRequest)
+                                .build();
+        return HttpResponse.status(HttpStatus.OK).body(metrics);
     }
 }

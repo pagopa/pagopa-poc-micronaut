@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AppStats {
+public class AppMetric {
 
-    private float cpu;
+    private float meanTimePerRequest;
 }
