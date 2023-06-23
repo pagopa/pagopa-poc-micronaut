@@ -47,7 +47,7 @@ public class BaseController {
     private String environment;
 
     @Value("${time.mean.default}")
-    private float defaultMeanTime;
+    private int defaultMeanTime;
 
     private MeterRegistry meterRegistry;
     private Instant referenceTime = Instant.now();
@@ -85,15 +85,18 @@ public class BaseController {
     @Get("/metrics/custom")
     @Timed
     public HttpResponse<AppMetric> getMeanTimePerRequest() {
-        float meanTimePerRequest;
+        int meanTimePerRequest;
 
         Timer timer = this.meterRegistry
                               .find("http.server.requests")
                               .timer();
 
+        double mean = timer.mean(TimeUnit.MILLISECONDS);
+        LOGGER.info("metrics/http.web.request.mean called, value: " + mean);
+
         if(timer == null)
             meanTimePerRequest = defaultMeanTime;
-        else meanTimePerRequest = (float) timer.mean(TimeUnit.MILLISECONDS);
+        else meanTimePerRequest = (int) mean;
 
         boolean isTimeElapsed = Duration.between(referenceTime, Instant.now()).toSeconds() >= 10;
         if(isTimeElapsed) {
@@ -101,11 +104,9 @@ public class BaseController {
             referenceTime = Instant.now();
         }
 
-        LOGGER.info("metrics/http.web.request.mean called, value: " + meanTimePerRequest);
-
         AppMetric metrics = AppMetric.builder()
                                 .meanTimePerRequest(meanTimePerRequest)
-                                .cpu(80.0f)
+                                .cpu(80)
                                 .build();
         return HttpResponse.status(HttpStatus.OK).body(metrics);
     }

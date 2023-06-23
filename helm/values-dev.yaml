@@ -56,13 +56,7 @@ microservice-chart:
     triggers:
       - type: metrics-api
         metadata:
-          targetValue: "79.0"
-          activationTargetValue: "60.0"
-          url: "http://localhost:8080/metrics/custom"
-          valueLocation: "cpu"
-      - type: metrics-api
-        metadata:
-          targetValue: "1.3"
+          targetValue: "1"
           url: "http://localhost:8080/metrics/custom"
           valueLocation: "meanTimePerRequest"
   envConfig:

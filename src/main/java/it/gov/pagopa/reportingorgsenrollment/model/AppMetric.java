@@ -11,6 +11,6 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AppMetric {
 
-    private float meanTimePerRequest;
-    private float cpu;
+    private int meanTimePerRequest;
+    private int cpu;
 }
