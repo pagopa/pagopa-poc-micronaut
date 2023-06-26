@@ -7,6 +7,7 @@ Feature: All about Organizations
     Given an organization with id "UNKNOW"
     When the organization "creates" enrollment
     Then the organization gets the status code 201
+    Then the organization "deletes" enrollment
 
   Scenario: An organization deletes an enrollment
     Given a valid enrollment
@@ -17,11 +18,13 @@ Feature: All about Organizations
   	Given a valid enrollment
   	When the organization "gets" enrollment
   	Then the organization gets the status code 200
+    Then the organization "deletes" enrollment
 
   Scenario: An organization gets all the enrollments
   	Given a valid enrollment
   	When the organization "gets all" enrollment
   	Then the organization gets the status code 200
+    Then the organization "deletes" enrollment
 
 # 404
 
@@ -41,3 +44,4 @@ Feature: All about Organizations
     Given a valid enrollment
     When the organization "creates" enrollment
     Then the organization gets the status code 409
+    When the organization "deletes" enrollment

@@ -40,8 +40,7 @@ When('the organization {string} enrollment', async function (action) {
     	responseToCheck = await removeOrganization(idOrg);
     } else if (action==="gets"){
     	responseToCheck = await getOrganization(idOrg);
-    }
-    else if (action==="gets all"){
+    } else if (action==="gets all"){
     	responseToCheck = await getOrganizations();
     }
 });
