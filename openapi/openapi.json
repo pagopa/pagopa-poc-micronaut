@@ -9,7 +9,7 @@
     "license": {
       "name": "MIT"
     },
-    "version": "0.0.1-1-keda-autoscaling"
+    "version": "0.1.0"
   },
   "paths": {
     "/info": {
