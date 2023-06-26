@@ -9,7 +9,6 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
@@ -21,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import it.gov.pagopa.reportingorgsenrollment.model.AppInfo;
-import it.gov.pagopa.reportingorgsenrollment.model.AppMetric;
+import it.gov.pagopa.reportingorgsenrollment.model.AppMetrics;
 import it.gov.pagopa.reportingorgsenrollment.model.ProblemJson;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
@@ -84,7 +83,7 @@ public class BaseController {
 
     @Get("/metrics/custom")
     @Timed
-    public HttpResponse<AppMetric> getMeanTimePerRequest() {
+    public HttpResponse<AppMetrics> getMeanTimePerRequest() {
         int meanTimePerRequest;
 
         Timer timer = this.meterRegistry
@@ -104,9 +103,8 @@ public class BaseController {
             referenceTime = Instant.now();
         }
 
-        AppMetric metrics = AppMetric.builder()
+        AppMetrics metrics = AppMetrics.builder()
                                 .meanTimePerRequest(meanTimePerRequest)
-                                .cpu(80)
                                 .build();
         return HttpResponse.status(HttpStatus.OK).body(metrics);
     }

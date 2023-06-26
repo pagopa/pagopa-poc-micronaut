@@ -57,7 +57,7 @@ microservice-chart:
       - type: metrics-api
         metadata:
           targetValue: "1"
-          url: "http://localhost:8080/metrics/custom"
+          url: "https://weudev.shared.internal.dev.platform.pagopa.it/pagopa-poc-micronaut-service/metrics/custom"
           valueLocation: "meanTimePerRequest"
   envConfig:
     WEBSITE_SITE_NAME: 'pagopa-d-poc-micronaut-service' # required to show cloud role name in application insights
