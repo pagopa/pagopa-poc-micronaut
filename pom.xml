@@ -22,7 +22,7 @@
         <lombok.version>1.18.22</lombok.version>
         <micronaut-openapi.version>4.5.2</micronaut-openapi.version>
         <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
-        <h2.version>2.1.212</h2.version>
+        <h2.version>2.2.220</h2.version>
         <mockito-junit.version>4.1.0</mockito-junit.version>
         <micronaut.runtime>netty</micronaut.runtime>
         <azure-data-tables.version>12.3.6</azure-data-tables.version>
