@@ -1,5 +1,8 @@
 package it.gov.pagopa.reportingorgsenrollment.controller;
 
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import io.micronaut.context.annotation.Value;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
@@ -17,11 +20,22 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import it.gov.pagopa.reportingorgsenrollment.model.AppInfo;
+import it.gov.pagopa.reportingorgsenrollment.model.AppMetrics;
 import it.gov.pagopa.reportingorgsenrollment.model.ProblemJson;
+import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller()
 public class BaseController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
+
     @Value("${info.application.artifactId}")
     private String name;
 
@@ -31,13 +45,22 @@ public class BaseController {
     @Value("${info.properties.environment}")
     private String environment;
 
+    @Value("${time.mean.default}")
+    private int defaultMeanTime;
+
+    private MeterRegistry meterRegistry;
+    private Instant referenceTime = Instant.now();
+
+    @Inject
+    public BaseController(MeterRegistry meterRegistry) {
+        this.meterRegistry = meterRegistry;
+    }
 
     @Hidden
     @Get
     public HttpResponse<?> base(){
         return HttpResponse.seeOther(UriBuilder.of("/swagger-ui/").build());
     }
-
 
     @Operation(summary = "health check", description = "Return OK if application is started", security = {@SecurityRequirement(name = "ApiKey")}, tags = {"Base"})
     @ApiResponses(value = {
@@ -56,5 +79,33 @@ public class BaseController {
                 .environment(environment)
                 .build();
         return HttpResponse.status(HttpStatus.OK).body(info);
+    }
+
+    @Get("/metrics/custom")
+    @Timed
+    public HttpResponse<AppMetrics> getMeanTimePerRequest() {
+        int meanTimePerRequest;
+
+        Timer timer = this.meterRegistry
+                              .find("http.server.requests")
+                              .timer();
+
+        double mean = timer.mean(TimeUnit.MILLISECONDS);
+        LOGGER.info("metrics/http.web.request.mean called, value: " + mean);
+
+        if(timer == null)
+            meanTimePerRequest = defaultMeanTime;
+        else meanTimePerRequest = (int) mean;
+
+        boolean isTimeElapsed = Duration.between(referenceTime, Instant.now()).toSeconds() >= 10;
+        if(isTimeElapsed) {
+            this.meterRegistry.clear();
+            referenceTime = Instant.now();
+        }
+
+        AppMetrics metrics = AppMetrics.builder()
+                                .meanTimePerRequest(meanTimePerRequest)
+                                .build();
+        return HttpResponse.status(HttpStatus.OK).body(metrics);
     }
 }
