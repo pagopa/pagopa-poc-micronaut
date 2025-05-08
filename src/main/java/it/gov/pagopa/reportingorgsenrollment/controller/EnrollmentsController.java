@@ -42,5 +42,4 @@ public class EnrollmentsController implements IEnrollmentsController {
     public HttpResponse<List<OrganizationModelResponse>> getOrganizations() {
         return HttpResponse.ok(enrollmentsService.getOrganizations());
     }
-
 }

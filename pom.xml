@@ -2,8 +2,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.gov.pagopa</groupId>
-    <artifactId>ReportingOrgsEnrollment</artifactId>
-    <version>0.0.1</version>
+    <artifactId>reporting-orgs-enrollment</artifactId>
+    <version>0.1.0</version>
     <name>PagoPA API - Reporting Organizations Enrollments</name>
     <description>Reporting orgs enrollment project</description>
     <packaging>${packaging}</packaging>
@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-parent</artifactId>
-        <version>3.7.2</version>
+        <version>3.7.3</version>
     </parent>
 
     <properties>
@@ -37,6 +37,11 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>io.micronaut.micrometer</groupId>
+            <artifactId>micronaut-micrometer-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
@@ -100,6 +105,11 @@
             <version>${h2.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-management</artifactId>
+            <scope>compile</scope>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.azure/azure-data-tables -->
         <dependency>
             <groupId>com.azure</groupId>
@@ -150,7 +160,19 @@
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
             </plugin>
-
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <configuration>
+                    <buildArgs combine.children="append">
+                        <buildArg>--verbose</buildArg>
+                        <buildArg>--initialize-at-build-time=org.codehaus.stax2.typed.Base64Variants</buildArg>
+                        <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                        <buildArg>-H:+AddAllCharsets</buildArg>
+                        <buildArg>--initialize-at-build-time=com.azure.data.tables.implementation.models</buildArg>
+                    </buildArgs>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -189,6 +211,11 @@
                             <groupId>io.micronaut.openapi</groupId>
                             <artifactId>micronaut-openapi</artifactId>
                             <version>${micronaut-openapi.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut.micrometer</groupId>
+                            <artifactId>micronaut-micrometer-annotation</artifactId>
+                            <version>${micronaut.micrometer.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>

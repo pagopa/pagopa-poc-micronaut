@@ -1,0 +1,10 @@
+{
+  "environment": [
+    {
+      "env": "dev",
+      "host": "https://api.dev.platform.pagopa.it/shared/poc/reporting-orgs-enrollment/v1",
+      "basePath": "organizations",
+      "numberOfEventsToPreload":"1000"
+    }
+  ]
+}
