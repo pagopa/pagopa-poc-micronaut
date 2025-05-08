@@ -4,7 +4,7 @@ microservice-chart:
   fullnameOverride: ""
   image:
     repository: pagopadcommonacr.azurecr.io/pagopapocmicronaut
-    tag: "latest"
+    tag: "0.1.0"
     pullPolicy: Always
   livenessProbe:
     httpGet:
@@ -54,11 +54,11 @@ microservice-chart:
     pollingInterval: 10 # seconds
     cooldownPeriod: 50 # seconds
     triggers:
-      - type: cpu
+      - type: metrics-api
         metadata:
-          # Required
-          type: Utilization # Allowed types are 'Utilization' or 'AverageValue'
-          value: "75"
+          targetValue: "1"
+          url: "https://weudev.shared.internal.dev.platform.pagopa.it/pagopa-poc-micronaut-service/metrics/custom"
+          valueLocation: "meanTimePerRequest"
   envConfig:
     WEBSITE_SITE_NAME: 'pagopa-d-poc-micronaut-service' # required to show cloud role name in application insights
     ENV: 'azure-d-aks'

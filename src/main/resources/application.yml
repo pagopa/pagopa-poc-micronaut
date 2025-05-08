@@ -26,6 +26,18 @@ tables:
       table: ${ORGANIZATIONS_TABLE}
 #end::datasource_table
 ---
+#tag::metrics[]
+micronaut:
+  metrics:
+    enabled: true
+    binders:
+      jvm:
+        enabled: true
+time:
+  mean:
+    default: 10 # milliseconds
+#end::metrics[]
+---
 #tag::datasource_sql[]
 datasources:
   default:
