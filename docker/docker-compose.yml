@@ -36,7 +36,7 @@ services:
 
   azure-storage:
     container_name: 'azure-storage'
-    image: mcr.microsoft.com/azure-storage/azurite
+    image: mcr.microsoft.com/azure-storage/azurite@sha256:0a47e12e3693483cef5c71f35468b91d751611f172d2f97414e9c69113b106d9
     ports:
       - '10000:10000'
       - '10001:10001'
