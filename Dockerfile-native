@@ -1,10 +1,10 @@
-FROM maven:3.8.4-jdk-11-slim as buildtime
+FROM maven:3.8.4-jdk-11-slim@sha256:04f8e5ba4a6a74fb7f97940bc75ac7340520728d2fb051ecc5c9ecbb9ba28b48 as buildtime
 WORKDIR /build
 COPY . .
 RUN mvn clean package -Dmaven.test.skip=true
 RUN mvn dependency:copy-dependencies
 
-FROM ghcr.io/graalvm/native-image:ol7-java11-22.2.0 as builder
+FROM ghcr.io/graalvm/native-image:ol7-java11-22.2.0@sha256:4b43819efcb3a054b63c35bd0d96c7af8f69d9146d80fc56f72aa8358377c50c as builder
 WORKDIR /home/app
 COPY --from=buildtime build/target/classes /home/app/classes
 COPY --from=buildtime build/target/dependency/* /home/app/libs/
@@ -14,7 +14,7 @@ ENV GRAALVM_ARGS="-H:+ReportExceptionStackTraces --initialize-at-build-time=org.
 ENV USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM=false
 RUN native-image ${GRAALVM_ARGS} -H:Class=${CLASS_NAME} -H:Name=application --no-fallback -cp "/home/app/libs/*:/home/app/classes/"
 
-FROM frolvlad/alpine-glibc:alpine-3.12
+FROM frolvlad/alpine-glibc:alpine-3.12@sha256:7a026b8aec933a4db64677e675a82002b926199cb85662200995c68b9f3d5f66
 ARG EXTRA_CMD
 RUN if [[ -n "${EXTRA_CMD}" ]] ; then eval ${EXTRA_CMD} ; fi
 COPY --from=builder /home/app/application /app/application
